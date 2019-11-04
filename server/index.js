@@ -5,6 +5,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const app = express();
+const socketio = require('socket.io')
 const PORT = process.env.PORT || 3000;
 
 passport.serializeUser((user, done) => done(null, user.id))
@@ -49,6 +50,24 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).send(err.message || 'Internal server error.')
 })
 
-app.listen(PORT, () => 
+const server = app.listen(PORT, () => 
     console.log(`Listening at http://localhost:${PORT}`)
 )
+
+const io = socketio(server);
+
+io.on('connection', socket => {
+    console.log(`A socket connection to the server has been made: ${socket.id}`)
+
+    socket.on('shipmentUpdate', () => {
+        socket.broadcast.emit('updateReceive')
+    })
+
+    socket.on('pickupRequest', (pickup, delivery) => {
+        socket.broadcast.emit('pickupRequested', pickup, delivery)
+    })
+
+    socket.on('disconnect', () => {
+        console.log(`connection ${socket.id} has left the building`)
+    })
+})
