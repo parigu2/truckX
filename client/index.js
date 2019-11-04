@@ -7,6 +7,8 @@ import store from './store'
 import App from './app'
 import './css/index.css'
 
+import './socket'
+
 ReactDOM.render(
    <Provider store={store}>
       <Router history={history}>
