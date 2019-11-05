@@ -3,11 +3,16 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getAll} from '../store'
 import socket from '../socket'
+import ShippingDetail from './shippingDetail'
 
 class Main extends Component {
     constructor() {
         super()
+        this.state = {
+            switch: false
+        }
         this.pickRequest = this.pickRequest.bind(this)
+        this.onSwitch = this.onSwitch.bind(this)
     }
 
     async componentDidMount() {
@@ -24,6 +29,12 @@ class Main extends Component {
     pickRequest(pickup, delivery) {
         alert('pick this shipment!!')
         socket.emit('pickupRequest', pickup, delivery)
+    }
+
+    onSwitch() {
+        this.setState({
+            switch: !this.state.switch
+        })
     }
 
     render() {
@@ -43,7 +54,8 @@ class Main extends Component {
                             {item.numberOfPackage}<br/>
                             pick up at {item.pickupDate} delivery by {item.deliveryDate}<br/>
                             <button onClick={()=>this.pickRequest(item.pickup, item.delivery)}>Pick this shipment</button>
-                            <button>view details</button>
+                            <button onClick={()=>this.onSwitch()}>view details</button>
+                            {this.state.switch && <ShippingDetail address={item.pickup}/>}
                         </div>
                     )
                 })}
