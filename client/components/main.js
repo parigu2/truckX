@@ -4,15 +4,16 @@ import {Link} from 'react-router-dom'
 import {getAll} from '../store'
 import socket from '../socket'
 import ShippingDetail from './shippingDetail'
+import { Button, Header, Icon, Container, Card, Modal } from 'semantic-ui-react'
 
 class Main extends Component {
     constructor() {
         super()
-        this.state = {
-            switch: false
-        }
+        // this.state = {
+        //     switch: false
+        // }
         this.pickRequest = this.pickRequest.bind(this)
-        this.onSwitch = this.onSwitch.bind(this)
+        // this.onSwitch = this.onSwitch.bind(this)
     }
 
     async componentDidMount() {
@@ -31,35 +32,56 @@ class Main extends Component {
         socket.emit('pickupRequest', pickup, delivery)
     }
 
-    onSwitch() {
-        this.setState({
-            switch: !this.state.switch
-        })
-    }
+    // onSwitch() {
+    //     this.setState({
+    //         switch: !this.state.switch
+    //     })
+    // }
 
     render() {
         const {shipment} = this.props
         return (
-            <div>
-                <h2>main component</h2>
-                <Link to='/shippingRequest'><button>Shipping Request!</button></Link>
+            <Container style={{margin: '5em'}}>
+                <Header as='h2' icon textAlign='center'>
+                    <Icon name='users' circular />
+                    <Header.Content>main component</Header.Content>
+                    <br/>
+                    <Link to='/shippingRequest'><Button primary>Shipping Request!</Button></Link>
+                </Header>
 
-                {shipment && shipment.shipments && shipment.shipments.map(item=>{
-                    return (
-                        <div key={item.pickup}>
-                            {item.pickup}<br/>
-                            {item.delivery}<br/>
-                            {item.length, item.width, item.height}<br/>
-                            {item.weight}<br/>
-                            {item.numberOfPackage}<br/>
-                            pick up at {item.pickupDate} delivery by {item.deliveryDate}<br/>
-                            <button onClick={()=>this.pickRequest(item.pickup, item.delivery)}>Pick this shipment</button>
-                            <button onClick={()=>this.onSwitch()}>view details</button>
-                            {this.state.switch && <ShippingDetail address={item.pickup}/>}
-                        </div>
-                    )
-                })}
-            </div>
+                <Card.Group>
+                    {shipment && shipment.shipments && shipment.shipments.map((item,idx)=>{
+                        return (
+                            <Card key={idx}>
+                                <Card.Content>
+                                    <Card.Header>Shipment {idx+1}</Card.Header>
+                                    <Card.Meta>
+                                        pick up at {item.pickupDate}<br/>
+                                        delivery by {item.deliveryDate}
+                                    </Card.Meta>
+                                    <Card.Description>
+                                        From: {item.pickup}<br/>
+                                        To: {item.delivery}<br/>
+                                        Dims: {item.length} x {item.width} x {item.height}<br/>
+                                        lbs: {item.weight}<br/>
+                                        Pcs: {item.numberOfPackage}<br/>
+                                    </Card.Description>
+                                </Card.Content>
+                                <Card.Content extra>
+                                    <div className='ui two buttons'>
+                                        <Button color='green' onClick={()=>this.pickRequest(item.pickup, item.delivery)}>Pick</Button>
+                                        {/* <Button color='purple' onClick={()=>this.onSwitch()}>view details</Button> */}
+                                        <Modal trigger={<Button color='purple'>View Details</Button>}>
+                                            <ShippingDetail address={item.pickup} delivery={item.delivery}/>
+                                        </Modal>
+                                    </div>
+                                </Card.Content>
+                                {/* {this.state.switch && <ShippingDetail address={item.pickup} delivery={item.delivery}/>} */}
+                            </Card>
+                        )
+                    })}
+                </Card.Group>
+            </Container>
         )
     }
 }

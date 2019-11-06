@@ -4,6 +4,7 @@ import history from '../history'
 import ShippingForm from './shippingForm'
 import {add} from '../store'
 import socket from '../socket'
+import { Container, Header, Icon } from 'semantic-ui-react'
 
 class ShippingRequest extends Component {
     constructor() {
@@ -40,10 +41,13 @@ class ShippingRequest extends Component {
 
     render() {
         return (
-            <div>
-                shipping request
+            <Container style={{margin: '5em'}}>
+                <Header as='h2' icon textAlign='center'>
+                    <Icon name='shipping' circular />
+                    <Header.Content>shipping request</Header.Content>
+                </Header>
                 <ShippingForm textChange={this.textChange} handleSubmit={this.handleSubmit} value={this.state}/>
-            </div>
+            </Container>
         )
     }
 }
