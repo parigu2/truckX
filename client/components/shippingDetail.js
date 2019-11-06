@@ -20,7 +20,10 @@ const geocoder = new MapboxGeocoder({
 });
 
 const direction = new MapboxDirections({
-    accessToken: "pk.eyJ1IjoicGFyaWd1MiIsImEiOiJjamtrNG96NHcxbmNoM3hxaGJwd2cyeWk5In0.C85GPiyv8CD06EhjheZxtQ"
+    accessToken: "pk.eyJ1IjoicGFyaWd1MiIsImEiOiJjamtrNG96NHcxbmNoM3hxaGJwd2cyeWk5In0.C85GPiyv8CD06EhjheZxtQ",
+    unit: 'metric',
+    profile: 'driving',
+    container: 'directions'
 })
 
 export default class ShippingDetail extends Component {
@@ -53,18 +56,18 @@ export default class ShippingDetail extends Component {
     }
 
     async componentDidMount() {
-        // this.map = new mapboxgl.Map({
-        //     container: this.mapContainer,
-        //     style: 'mapbox://styles/mapbox/streets-v10',
-        //     center: [-87.63, 41.88],
-        //     zoom: 12
-        // })
+        this.map = new mapboxgl.Map({
+            container: this.mapContainer,
+            style: 'mapbox://styles/mapbox/streets-v10',
+            center: [-87.63, 41.88],
+            zoom: 12
+        })
 
-        // this.map.addControl(direction, 'top-left')
+        this.map.addControl(direction, 'top-left')
 
-        // //Search nearby first
-        // this.map.on('load', this.updateGeocoderProximity); // set proximity on map load
-        // this.map.on('moveend', this.updateGeocoderProximity); // and then update proximity each time the map moves
+        //Search nearby first
+        this.map.on('load', this.updateGeocoderProximity); // set proximity on map load
+        this.map.on('moveend', this.updateGeocoderProximity); // and then update proximity each time the map moves
 
         const address = this.addressEditor(this.props.address)
         const location = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?types=address&access_token=pk.eyJ1IjoicGFyaWd1MiIsImEiOiJjamtrNG96NHcxbmNoM3hxaGJwd2cyeWk5In0.C85GPiyv8CD06EhjheZxtQ`)
@@ -93,6 +96,13 @@ export default class ShippingDetail extends Component {
             distance: routeEst.data.routes[0].distance,
             time: routeEst.data.routes[0].duration
         }
+
+        this.map.on('load',()=>{
+            direction.setOrigin([pickup.longitude, pickup.latitude])
+            // direction.addWaypoint(0, [pickup.latitude, pickup.longitude])
+            // direction.addWaypoint(1, [delivery.latitude, delivery.longitude])
+            direction.setDestination([delivery.longitude, delivery.latitude])
+        })
 
         this.setState({
             viewport,
@@ -198,7 +208,7 @@ export default class ShippingDetail extends Component {
                     /> */}
                 {/* </MapGL> */}
                 <p>distance: {Math.floor(route.distance/1610)} miles / time: {Math.floor(route.time/60)} min</p>
-                {/* <div style={{width: '600px', height: '500px'}} ref={el => this.mapContainer = el}/> */}
+                <div style={{width: '600px', height: '500px'}} ref={el => this.mapContainer = el}/>
             </div>
         )
     }
