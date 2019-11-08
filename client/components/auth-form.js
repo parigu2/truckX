@@ -16,12 +16,14 @@ const AuthForm = props => {
               icon='user'
               iconPosition='left'
               label='Username'
+              name='email'
               placeholder='Username'
             />
             <Form.Input
               icon='lock'
               iconPosition='left'
               label='Password'
+              name='password'
               type='password'
             />
 
@@ -44,70 +46,6 @@ const AuthForm = props => {
 
       <Divider vertical>Or</Divider>
     </Segment>
-
-    // <div>
-    //   <div className="ui placeholder segment">
-    //     <div className="ui two column very relaxed stackable grid">
-    //       <div className="column">
-    //         <div id="error-message">
-    //           {error &&
-    //             error.response && (
-    //               <div>
-    //                 {' '}
-    //                 {'*'}
-    //                 {error.response.data}{' '}
-    //               </div>
-    //             )}
-    //         </div>
-    //         <div className="ui form">
-    //           <form onSubmit={handleSubmit} name={name}>
-    //             <div className="field">
-    //               <label>Username</label>
-    //               <div className="ui left icon input">
-    //                 <input type="text" name="email" placeholder="Username" />
-    //                 <i className="user icon" />
-    //               </div>
-    //             </div>
-    //             <div className="field">
-    //               <label>Password</label>
-    //               <div className="ui left icon input">
-    //                 <input type="password" name="password" />
-    //                 <i className="lock icon" />
-    //               </div>
-    //             </div>
-    //             <br />
-    //             <button
-    //               className="ui blue submit button"
-    //               id="login-button"
-    //               type="submit"
-    //             >
-    //               Login
-    //             </button>
-    //           </form>
-    //         </div>
-    //       </div>
-    //       <div className="middle aligned column">
-    //         <div className="auth-button">
-    //           <a href="/auth/google">
-    //             <button className="ui google plus button">
-    //               <i className="google plus icon" />
-    //               {displayName} with Google
-    //             </button>
-    //           </a>
-    //         </div>
-    //         <div className="auth-button">
-    //           <a href="/auth/facebook">
-    //             <button className="ui facebook button">
-    //               <i className="facebook icon" />
-    //               {displayName} with Facebook
-    //             </button>
-    //           </a>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <div className="ui vertical divider">Or</div>
-    //   </div>
-    // </div>
   )
 }
 
@@ -118,12 +56,6 @@ const AuthForm = props => {
  *   function, and share the same Component. This is a good example of how we
  *   can stay DRY with interfaces that are very similar to each other!
  */
-
-// const mapState = authProps => state => ({
-//   user: state.user,
-//   cart: state.cart,
-//   ...authProps(state)
-// })
 
 const mapLogin = state => {
   return {

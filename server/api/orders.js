@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:orderId', async (req, res, next) => {
   try {
     const id = req.params.orderId
-    const order = await Order.findAll({
+    const [order] = await Order.findAll({
       where: {
         id,
       }
