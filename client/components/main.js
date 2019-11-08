@@ -62,9 +62,9 @@ class Main extends Component {
                                     <Card.Description>
                                         From: {item.pickup}<br/>
                                         To: {item.delivery}<br/>
-                                        Dims: {item.length} x {item.width} x {item.height}<br/>
-                                        lbs: {item.weight}<br/>
-                                        Pcs: {item.numberOfPackage}<br/>
+                                        Dims: {item.item[0][0]} x {item.item[0][1]} x {item.item[0][2]}<br/>
+                                        lbs: {item.item[0][3]}<br/>
+                                        Pcs: {item.item.length}<br/>
                                     </Card.Description>
                                 </Card.Content>
                                 <Card.Content extra>

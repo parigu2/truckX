@@ -32,8 +32,15 @@ class ShippingRequest extends Component {
 
     async handleSubmit(event) {
         event.preventDefault()
-
-        await this.props.addShipment(this.state);
+        const newShipment = {
+            pickup: this.state.pickup,
+            delivery: this.state.delivery,
+            pickupDate: this.state.pickupDate,
+            deliveryDate: this.state.deliveryDate,
+            item: [[Number(this.state.length), Number(this.state.width), Number(this.state.height), Number(this.state.weight)]]
+            // item: `{${this.state.length},${this.state.width},${this.state.height},${this.state.weight}}`
+        }
+        await this.props.addShipment(newShipment);
         alert("submitted!!")
         history.push("/")
         socket.emit("shipmentUpdate")
