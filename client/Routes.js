@@ -4,7 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTpyes from 'prop-types'
 import {me} from './store'
 
-import {Login, Signup, Main, ShippingRequest, ShippingDetail} from './components'
+import {Login, Signup, Main, ShippingRequest, ShippingDetail, Orders, OrderDetail} from './components'
 
 class Routes extends Component {
     componentDidMount() {
@@ -18,9 +18,19 @@ class Routes extends Component {
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={Signup} />
-                <Route exact path='/' component={Main}/>
-                <Route path='/shippingRequest' component={ShippingRequest}/>
-                <Route path='/shippingDetail' component={ShippingDetail}/>
+                {
+                    isLoggedIn && (
+                        <Switch>
+                            <Route exact path='/' component={Main}/>
+                            <Route path='/shippingRequest' component={ShippingRequest}/>
+                            <Route path='/shippingDetail' component={ShippingDetail}/>
+                            <Route exact path='/orders' component={Orders} />
+                            <Route path='/orders/:id' component={OrderDetail} />
+                            <Route component={Main}/>
+                        </Switch>
+                    )
+                }
+                <Route component={Login}/>
             </Switch>
         )
     }
@@ -28,7 +38,7 @@ class Routes extends Component {
 
 const mapState = state => {
     return {
-        isLoggedIn: !!state.auth.name,
+        isLoggedIn: !!state.auth.email,
         isAdmin: !!state.auth.isAdmin
     }
 }

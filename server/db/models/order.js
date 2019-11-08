@@ -21,6 +21,11 @@ const Order = db.define('order', {
     type: Sequelize.ARRAY(Sequelize.ARRAY(Sequelize.DECIMAL(10,2))),
     allowNull: false,
     defaultValue: []
+  },
+  status: {
+    type: Sequelize.ENUM,
+    values: ['processing', 'pending', 'done', 'cancel'],
+    defaultValue: 'pending'
   }
 })
 

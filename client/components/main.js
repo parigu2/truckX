@@ -50,11 +50,11 @@ class Main extends Component {
                 </Header>
 
                 <Card.Group>
-                    {shipment && shipment.shipments && shipment.shipments.map((item,idx)=>{
+                    {shipment && shipment.shipments && shipment.shipments.map(item=>{
                         return (
-                            <Card key={idx}>
+                            <Card key={item.id}>
                                 <Card.Content>
-                                    <Card.Header>Shipment {idx+1}</Card.Header>
+                                    <Card.Header>Shipment {item.id}</Card.Header>
                                     <Card.Meta>
                                         pick up at {item.pickupDate}<br/>
                                         delivery by {item.deliveryDate}

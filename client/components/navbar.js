@@ -20,6 +20,11 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/login">Login</Link>
         </Menu.Item>
       )}
+      {isLoggedIn &&
+        <Menu.Item>
+          <Link to="/orders">Order</Link>
+        </Menu.Item>
+      }
       {isLoggedIn ? (
         <Menu.Item>
           <a href="#" onClick={handleClick}>

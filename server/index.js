@@ -11,7 +11,7 @@ const sessionStore = new SequelizeStore({db})
 const app = express();
 const socketio = require('socket.io')
 const PORT = process.env.PORT || 3000;
-module.exports = app
+// module.exports = app
 
 if (process.env.NODE_ENV === 'test') {
     after('close the session store', () => sessionStore.stopExpiringSessions())
@@ -21,7 +21,7 @@ passport.serializeUser((user, done) => done(null, user.id))
 
 passport.deserializeUser(async (id, done) => {
     try {
-      const user = await db.models.user.findById(id)
+      const user = await db.models.user.findByPk(id)
       done(null, user)
     } catch (err) {
       done(err)
