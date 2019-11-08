@@ -1,5 +1,8 @@
+// const isDev = process.env.NODE_ENV === 'development'
+
 module.exports = {
     entry: ['@babel/polyfill','./client/index.js'],
+    // mode: isDev ? 'development' : 'production',
     mode: 'development',
     output: {
       path: __dirname,

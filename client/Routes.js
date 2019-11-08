@@ -4,8 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTpyes from 'prop-types'
 import {me} from './store'
 
-import {Main, ShippingRequest, ShippingDetail} from './components'
-// import {AdminMember, AdminGoal} from './component/admin'
+import {Login, Signup, Main, ShippingRequest, ShippingDetail} from './components'
 
 class Routes extends Component {
     componentDidMount() {
@@ -17,6 +16,8 @@ class Routes extends Component {
 
         return (
             <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/signup" component={Signup} />
                 <Route exact path='/' component={Main}/>
                 <Route path='/shippingRequest' component={ShippingRequest}/>
                 <Route path='/shippingDetail' component={ShippingDetail}/>
