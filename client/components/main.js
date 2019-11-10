@@ -9,11 +9,7 @@ import { Button, Header, Icon, Container, Card, Modal } from 'semantic-ui-react'
 class Main extends Component {
     constructor() {
         super()
-        // this.state = {
-        //     switch: false
-        // }
         this.pickRequest = this.pickRequest.bind(this)
-        // this.onSwitch = this.onSwitch.bind(this)
     }
 
     async componentDidMount() {
@@ -31,12 +27,6 @@ class Main extends Component {
         alert('pick this shipment!!')
         socket.emit('pickupRequest', pickup, delivery)
     }
-
-    // onSwitch() {
-    //     this.setState({
-    //         switch: !this.state.switch
-    //     })
-    // }
 
     render() {
         const {shipment} = this.props
@@ -70,13 +60,11 @@ class Main extends Component {
                                 <Card.Content extra>
                                     <div className='ui two buttons'>
                                         <Button color='green' onClick={()=>this.pickRequest(item.pickup, item.delivery)}>Pick</Button>
-                                        {/* <Button color='purple' onClick={()=>this.onSwitch()}>view details</Button> */}
                                         <Modal trigger={<Button color='purple'>View Details</Button>}>
                                             <ShippingDetail address={item.pickup} delivery={item.delivery}/>
                                         </Modal>
                                     </div>
                                 </Card.Content>
-                                {/* {this.state.switch && <ShippingDetail address={item.pickup} delivery={item.delivery}/>} */}
                             </Card>
                         )
                     })}
